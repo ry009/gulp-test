@@ -43,9 +43,6 @@ a:active {
   text-decoration: none;
   outline: 0;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent rgba(0, 0, 0, 0);
-  -moz-tap-highlight-color: transparent rgba(0, 0, 0, 0);
-  tap-highlight-color: transparent rgba(0, 0, 0, 0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
@@ -116,7 +113,8 @@ footer {
   text-align: center;
   transition: all 0.5s;
   z-index: 100;
-  color: #3f98ef; }
+  color: #3f98ef;
+  cursor: pointer; }
   .pageTop.positionFix {
     position: fixed;
     transition: all 0.5s; }

@@ -98,21 +98,33 @@ function pageTopFunc() {
 }
 
 pageTopFunc();
-var jsScroll = document.getElementsByClassName('jsScroll')[0];
-jsScroll.addEventListener('click', function () {
-  var y = document.body.scrollTop || document.documentElement.scrollTop;
-  var targetY = 0;
-  var scrollSpeed = 7;
-  var direction = this.dataset.scroll;
-  scrollToAnimation(0, y, 0, targetY, scrollSpeed, direction);
-  return false;
-}); // 指定した座標へスクロールアニメーション
+var jsScroll = document.getElementsByClassName('jsScroll');
+
+for (var i = 0; i < jsScroll.length; i++) {
+  jsScroll[i].addEventListener('click', function () {
+    var y = document.body.scrollTop || document.documentElement.scrollTop;
+    var scrollSpeed = 7;
+    var direction = this.dataset.scroll;
+    var scrollTarget = 0;
+
+    if (direction != 'up') {
+      scrollTarget = document.getElementById(direction).getBoundingClientRect().top;
+    }
+
+    ;
+    var targetY = scrollTarget;
+    scrollToAnimation(0, y, 0, targetY, scrollSpeed, direction);
+    return false;
+  });
+} // 指定した座標へスクロールアニメーション
+
 
 function scrollToAnimation(x, y, targetX, targetY, scrollSpeed, direction) {
   var scTop = direction === 'up' ? Math.floor(y - y / (scrollSpeed * 2)) : Math.floor(y + (y / (scrollSpeed * 2) + 1));
   var scrollTimer = setTimeout(function () {
     scrollToAnimation(x, scTop, targetX, targetY, scrollSpeed, direction);
   }, scrollSpeed);
+  console.log(targetY);
 
   if (direction === 'up') {
     if (y > targetY) {
@@ -122,7 +134,7 @@ function scrollToAnimation(x, y, targetX, targetY, scrollSpeed, direction) {
       clearTimeout(scrollTimer);
       window.scrollTo(x, targetY);
     }
-  } else if (direction === 'down') {
+  } else {
     if (y < targetY) {
       if (scTop == 0) scTop++;
       window.scrollTo(x, scTop);
