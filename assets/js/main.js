@@ -71,11 +71,66 @@ var api = function api() {
   });
 };
 
-document.addEventListener('DOMContentLoaded', function (e) {
+document.addEventListener('DOMContentLoaded', function () {
   init();
 });
-document.addEventListener('scroll', function (e) {
-  var wH = window.pageYOffset;
-  console.log(wH);
-});
+var pageTop = document.getElementsByClassName('pageTop')[0];
+
+function pageTopFunc() {
+  var pageTop = document.getElementsByClassName('pageTop')[0];
+  document.addEventListener('scroll', function (e) {
+    var wH = window.pageYOffset;
+    var sH = document.documentElement.scrollTop;
+    var scrollTop = wH || sH;
+
+    if (scrollTop > 100) {
+      pageTop.classList.add('positionFix');
+      pageTop.classList.remove('positionRelative');
+      pageTop.style.right = "20px";
+      pageTop.style.bottom = "20px";
+    } else {
+      pageTop.classList.add('positionAbsolte');
+      pageTop.classList.remove('positionFix');
+      pageTop.style.right = "-100%";
+      pageTop.style.bottom = "0";
+    }
+  });
+}
+
+pageTopFunc();
+var jsScroll = document.getElementsByClassName('jsScroll')[0];
+jsScroll.addEventListener('click', function () {
+  var y = document.body.scrollTop || document.documentElement.scrollTop;
+  var targetY = 0;
+  var scrollSpeed = 7;
+  var direction = this.dataset.scroll;
+  scrollToAnimation(0, y, 0, targetY, scrollSpeed, direction);
+  return false;
+}); // 指定した座標へスクロールアニメーション
+
+function scrollToAnimation(x, y, targetX, targetY, scrollSpeed, direction) {
+  var scTop = direction === 'up' ? Math.floor(y - y / (scrollSpeed * 2)) : Math.floor(y + (y / (scrollSpeed * 2) + 1));
+  var scrollTimer = setTimeout(function () {
+    scrollToAnimation(x, scTop, targetX, targetY, scrollSpeed, direction);
+  }, scrollSpeed);
+
+  if (direction === 'up') {
+    if (y > targetY) {
+      window.scrollTo(x, scTop);
+      scrollTimer;
+    } else {
+      clearTimeout(scrollTimer);
+      window.scrollTo(x, targetY);
+    }
+  } else if (direction === 'down') {
+    if (y < targetY) {
+      if (scTop == 0) scTop++;
+      window.scrollTo(x, scTop);
+      scrollTimer;
+    } else {
+      clearTimeout(scrollTimer);
+      window.scrollTo(x, targetY);
+    }
+  }
+}
 //# sourceMappingURL=main.js.map
