@@ -124,7 +124,6 @@ function scrollToAnimation(x, y, targetX, targetY, scrollSpeed, direction) {
   var scrollTimer = setTimeout(function () {
     scrollToAnimation(x, scTop, targetX, targetY, scrollSpeed, direction);
   }, scrollSpeed);
-  console.log(targetY);
 
   if (direction === 'up') {
     if (y > targetY) {

@@ -128,4 +128,8 @@ footer {
     display: inline-block;
     width: 100%; }
 
+.jsScroll {
+  transition: all 0.5s;
+  cursor: pointer; }
+
 /*# sourceMappingURL=style.css.map */
